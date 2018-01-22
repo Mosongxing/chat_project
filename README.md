@@ -4,7 +4,7 @@
 
 后台本来想用Express或Koa来写，但我是PHP工程师，做这种事情太不符合我的信仰。于是就只好在Workerman或Swoole上选一个框架来开发，考虑到要快速开发，就选用了纯PHP写的Workerman。
 
-项目从设计到开发完这个小demo，一共用了2周，都是在下班后利用零散时间开发，期间经历了好多的坑，也意识到了自己的不足。如果项目有什么不妥指出，请联系我，QQ：287727982。
+项目从设计到开发完这个小demo，一共用了2周，都是在下班后利用零散时间开发，期间经历了好多的坑，也意识到了自己的不足。如果项目有什么不妥请指出，也可以联系我，QQ：287727982。
 
 前端项目参考：[https://github.com/secreter/websocket_chat](https://github.com/secreter/websocket_chat)
 ## 版本
