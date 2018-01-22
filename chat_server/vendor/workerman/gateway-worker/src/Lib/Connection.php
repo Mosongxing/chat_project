@@ -208,6 +208,13 @@ class Connection
     protected $success = false;
 
     /**
+     * 保存单例对象
+     *
+     * @var object
+     */
+    private static $_instance = null;
+
+    /**
      * 选择哪些列
      *
      * @param string|array $cols
@@ -1676,6 +1683,19 @@ class Connection
         return ' RETURNING' . $this->indentCsv($this->returning);
     }
 
+    //私有克隆函数，防止外办克隆对象
+    private function __clone() {
+    
+    }
+
+    //静态方法，单例统一访问入口
+    static public function getInstance() {
+        if (is_null(self::$_instance) || !isset(self::$_instance)) {
+            self::$_instance = new self ();
+        }
+        return self::$_instance;
+    }
+
     /**
      * 构造函数
      *
@@ -1686,7 +1706,7 @@ class Connection
      * @param string $db_name
      * @param string $charset
      */
-    public function __construct($host='localhost', $port=3306, $user='root', $password='root', $db_name='chat', $charset = 'utf8')
+    private function __construct($host='localhost', $port=3306, $user='root', $password='root', $db_name='chat', $charset = 'utf8')
     {
         $this->settings = array(
             'host'     => Worker::$_config['db']['host'],

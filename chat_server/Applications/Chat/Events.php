@@ -52,7 +52,7 @@ class Events
     public static function onWorkerStart($worker)
     {
         if (isset(Worker::$_config['db']) && empty(self::$db)) {
-            self::$db = new \GatewayWorker\Lib\Connection();
+            self::$db = \GatewayWorker\Lib\Connection::getInstance();
         }
 
         if (isset(Worker::$_config['redis']) && empty(self::$redis)) {
