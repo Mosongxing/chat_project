@@ -1,0 +1,12 @@
+{
+    "name"  : "workerman/workerman-chat",
+    "type"  : "project",
+    "keywords": ["chat"],
+    "homepage": "http://www.workerman.net",
+    "license" : "MIT",
+    "require": {
+        "workerman/gateway-worker" : ">=3.0.0",
+        "predis/predis": "^1.1",
+        "clue/redis-react": "^2.1"
+    }
+}

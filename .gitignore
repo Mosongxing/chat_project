@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+chat_server/config
+chat_client/dist
+chat_client/node_modules
+chat_client/npm-debug.log
+sftp-config.json
