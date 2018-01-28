@@ -84,35 +84,20 @@ version：1.1.0
 
 ## 效果图
 
-### 测试账户：
-
-由于没有实现注册用户的功能，所以登录密码暂时使用明文，后面会渐渐完善。
-
-	用户名：a	密码：123
-	用户名：b	密码：123
-
 ### 登陆界面：
 
-<div align=center>
 <img src="./other/20180128163628.png">
-</div>
 
 ### 注册界面：
 
-<div align=center>
 <img src="./other/20180128163649.png">
-</div>
 
 ### 聊天界面：
 
-<div align=center>
 <img src="./other/20180128164140.png">
-</div>
 
 ### 群信息界面：
 
-<div align=center>
 <img src="./other/20180128164200.png">
-</div>
 
 ## 项目设计图(待写)
