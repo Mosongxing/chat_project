@@ -97,8 +97,9 @@ const CHAT = {
 				// console.log(router.app.$route.name);
 				if (router.app.$route.name == 'register') {
 					router.go('/register')
+				} else {
+					router.go('/login')
 				}
-				router.go('/login')
 			}
 
 			// 退出登录，广播系统消息

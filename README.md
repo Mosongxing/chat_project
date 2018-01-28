@@ -93,14 +93,26 @@ version：1.1.0
 
 ### 登陆界面：
 
-<img src="./other/20180122115904.png">
+<div align=center>
+<img src="./other/20180128163628.png">
+</div>
+
+### 注册界面：
+
+<div align=center>
+<img src="./other/20180128163649.png">
+</div>
 
 ### 聊天界面：
 
-<img src="./other/20180122120207.png">
+<div align=center>
+<img src="./other/20180128164140.png">
+</div>
 
 ### 群信息界面：
 
-<img src="./other/20180122120238.png">
+<div align=center>
+<img src="./other/20180128164200.png">
+</div>
 
 ## 项目设计图(待写)
