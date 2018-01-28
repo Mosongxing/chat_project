@@ -119,14 +119,14 @@ class Events
             return;
         }
 
-        if ($message_data['access_token'] != 'null') {
+        if (isset($message_data['access_token']) && $message_data['access_token'] != 'null') {
             $access_token = self::$redis->get($message_data['access_token']);
         } else {
             // 没有access_token或者access_token过期
             $access_token = false;
         }
         // var_dump($access_token);
-        if ($message_data['type'] != 'login' && !$access_token) {
+        if (!in_array($message_data['type'], ['login', 'check_user', 'register']) && !$access_token) {
             self::logout($client_id, $message_data);
             return;   
         }
@@ -164,6 +164,22 @@ class Events
                 $_SESSION['room_id'] = $message_data['room_id'];
                 $_SESSION['client_id'] = $client_id;
                 self::relogin($client_id, $message_data);
+                return;
+
+            // 检查注册账户
+            case 'check_user':
+                // 获取redis的数据，检查重连
+                $_SESSION['room_id'] = $message_data['room_id'];
+                $_SESSION['client_id'] = $client_id;
+                self::checkUser($client_id, $message_data);
+                return;
+
+            // 注册账户
+            case 'register':
+                // 获取redis的数据，检查重连
+                $_SESSION['room_id'] = $message_data['room_id'];
+                $_SESSION['client_id'] = $client_id;
+                self::register($client_id, $message_data);
                 return;
         }
    }
@@ -428,5 +444,73 @@ class Events
             Gateway::sendToCurrentClient($message);
             // var_dump($message);
         }    
-   }  
+   }
+
+
+   /**
+    * 检查用户账户
+    */
+   public static function checkUser($client_id, $message_data)
+   {
+        // var_dump($message_data);
+        $username = $message_data['username'];
+        // 检查用户信息
+        $data = self::$db->select('*')
+                         ->from('chat_user')
+                         ->where('username = :username')
+                         ->bindValues(['username' => base64_decode($username)])
+                         ->single();
+        
+        if (!empty($data)) {
+            $message = Gateway::success([
+                'msg_type' => 'check_user', 
+                'user_exist' => 1, 
+                'time' => date('Y-m-d H:i:s')
+            ]);
+        } else {
+            $message = Gateway::success([
+                'msg_type' => 'check_user', 
+                'user_exist' => 0, 
+                'time' => date('Y-m-d H:i:s')
+            ]);
+        }
+        Gateway::sendToCurrentClient($message);
+        // var_dump($message);
+   }
+
+
+   /**
+    * 注册用户
+    */
+   public static function register($client_id, $message_data)
+   {
+         echo 'method：register', PHP_EOL;
+        $username = base64_decode($message_data['username']);
+        $password = $message_data['password'];
+        // 插入数据库
+
+        $insert_id = self::$db->insert('chat_user')->cols([
+            'username' => $username,
+            'password' => $password,
+            'nickname' => $username,
+            'image' => '/image/no_pic.png',
+            'sign' => '这家伙很懒，什么都没有留下',
+            'update_time' => date('Y-m-d H:i:s')
+        ])->query();
+
+        if (!empty($insert_id)) {
+            $message = Gateway::success([
+                'msg_type' => 'register', 
+                'time' => date('Y-m-d H:i:s')
+            ]);
+        } else {
+            $message = Gateway::error(10087, [
+                'msg_type' => 'register', 
+                'time' => date('Y-m-d H:i:s')
+            ]);            
+        }
+        
+        Gateway::sendToCurrentClient($message);
+        // var_dump($message);
+   }
 }

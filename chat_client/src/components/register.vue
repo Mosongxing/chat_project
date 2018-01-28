@@ -9,18 +9,22 @@
       </div>
       <div class="-name">
         <label>用户名：</label>
-        <input type="text" v-model="name" placeholder="请输入用户名">
+        <input type="text" v-model="name" placeholder="请输入用户名" @blur="checkUser()">
       </div>
       <div class="-pwd">
         <label>密码：</label>
-        <input type="password" v-model="pwd" placeholder="请输入密码">
+        <input type="password" v-model="pwd1" placeholder="请输入密码">
+      </div>
+      <div class="-pwd">
+        <label>确认密码：</label>
+        <input type="password" v-model="pwd2" placeholder="请确认密码">
       </div>
       <div class="-login">
-        <span class="-btn" @click="login()">登录</span>
+        <span class="-btn" @click="register()">注册</span>
       </div>
     </div>
     <div class="foot">
-      <span>没有账户？请点击<a @click="register()">注册</a></span>
+      <span>已有账户？请点击<a @click="login()">登录</a></span>
     </div>
   </div>
 </template>
@@ -31,7 +35,8 @@ export default {
   data () {
     return {
       name:'',
-      pwd:'',
+      pwd1:'',
+      pwd2:'',
       socket:''
     }
   },
@@ -45,23 +50,32 @@ export default {
   },
   methods:{
     login(){
+      this.$router.go('/login')
+    },
+    register(){
+      if (!this.pwd1.trim()) {
+        alert("密码不能为空！")
+        return
+      }
+
+      if (!this.pwd2.trim()) {
+        alert("确认密码不能为空！")
+        return
+      }
+
+      if (this.pwd1 != this.pwd2) {
+        alert("两次密码不相等！")
+        return
+      }
+
+      CHAT.register(this.name, this.pwd1)
+    },
+    checkUser(){
       if (!this.name.trim()) {
         alert("昵称不能为空！")
         return
       }
-
-      if (!this.pwd.trim()) {
-        alert("密码不能为空！")
-        return
-      }
-      let sha1 = require('sha1')
-      CHAT.name = this.name
-      CHAT.pwd = sha1(this.pwd)
-      CHAT.login()
-      // this.$router.go('/')
-    },
-    register(){
-      this.$router.go('/register')
+      CHAT.checkUser(this.name)
     }
   }
 }
@@ -108,7 +122,7 @@ export default {
       border-top: solid 1px rgba(0,0,0,0.05);
       label{
         color: #999;
-        width: 80px; /*加长label标签*/
+        width: 100px; /*加长label标签*/
         text-align: right;/*然后文字居右，就可以实现用户名和密码右对齐*/
       }
       input{
@@ -147,7 +161,7 @@ export default {
     /*position: absolute;
     bottom: 0;*/
     /*background-color: #098;*/
-    height: 80px;
+    height: 40px;
     width: 100%;
     display: flex;
     justify-content: center;

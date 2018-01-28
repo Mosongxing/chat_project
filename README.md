@@ -9,7 +9,7 @@
 前端项目参考：[https://github.com/secreter/websocket_chat](https://github.com/secreter/websocket_chat)
 ## 版本
 
-version：1.0.0
+version：1.1.0
 
 ## 技术栈
 
@@ -21,21 +21,19 @@ version：1.0.0
 * Vue-Router
 * Webpack
 
+## 其他版本功能
+[1.0.0](https://github.com/Mosongxing/chat_project/tree/master/version/ver_1.0.0.md)
+
 ## 本期版本功能
-
-* 群聊
-* 登陆、退出登陆
-* 掉线重连
-* 登陆和掉线重连后获取离线消息
-* 超过设定时间自动退出登陆
-* 消息持久化
-
-## 下期版本功能
 
 * 修改个人资料
 * 发送图片
-* 注册账户
+* 注册账户(已完成)
 * 下拉加载消息
+
+## 下期版本功能
+
+* 消息搜索
 
 ## 启动项目前
 
@@ -95,14 +93,14 @@ version：1.0.0
 
 ### 登陆界面：
 
-<img src="./20180122115904.png">
+<img src="./other/20180122115904.png">
 
 ### 聊天界面：
 
-<img src="./20180122120207.png">
+<img src="./other/20180122120207.png">
 
 ### 群信息界面：
 
-<img src="./20180122120238.png">
+<img src="./other/20180122120238.png">
 
-## 项目设计图
+## 项目设计图(待写)

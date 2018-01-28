@@ -41,7 +41,7 @@ const CHAT = {
 		this.socket.send(`{"access_token": "${access_token}"`);
 	},
 	init:function(router, action = null){
-	    this.socket = new WebSocket("ws://192.168.1.245:7272")
+	    this.socket = new WebSocket("ws://192.168.31.63:7272")
 
 	    this.router = router
 	    // 设定定时器
@@ -77,8 +77,6 @@ const CHAT = {
 					CHAT.msgArr.push(data.data[i])
 				}
 				// console.log(CHAT.msgArr);
-			} else if(data.code == 10086) {
-				alert(data.msg)
 			}
 
 			// 登陆成功，广播系统消息
@@ -96,7 +94,10 @@ const CHAT = {
 			// 退出登陆，用户清除缓存
 			if (data.status == 1 && data.data.msg_type == 'logout') {
 				localStorage.clear();
-				// console.log(CHAT.onlineCount);
+				// console.log(router.app.$route.name);
+				if (router.app.$route.name == 'register') {
+					router.go('/register')
+				}
 				router.go('/login')
 			}
 
@@ -113,8 +114,23 @@ const CHAT = {
 				CHAT.msgArr = [];
 				CHAT.client_id = data.data.from_user_id
 				CHAT.updateSysMsg(data.data)
-			} else if(data.code == 10086) {
-				alert(data.msg)
+			}
+
+			// 检查用户是否存在
+			if (data.status == 1 && data.data.msg_type == 'check_user') {
+				// console.log(data.data);
+				if (data.data.user_exist == 1) {
+					alert('账户已存在')
+				}
+			}
+
+			// 用户注册
+			if (data.status == 1 && data.data.msg_type == 'register') {
+				// console.log(data.data);
+				alert('注册成功')
+				router.go('/login')
+			} else if(data.code == 10087) {
+				alert('注册失败')
 			}
 
 	    }
@@ -165,12 +181,27 @@ const CHAT = {
 			alert('发生错误')
 		}
 	},
-	//退出，本例只是一个简单的刷新
+	// 退出，本例只是一个简单的刷新
 	logout:function(){
 		let access_token = localStorage.getItem('access_token');
 		let nickname = localStorage.getItem('nickname');
 		var logout_data = `{"type":"logout", "nickname":"${nickname}", "access_token":"${access_token}","room_id":1}`;
 		this.socket.send(logout_data)
+	},
+	// 检查账户
+	checkUser:function(name){
+		let username = Base64.encode(name)
+		let data = `{"type":"check_user", "username":"${username}", "room_id":1}`;
+		this.socket.send(data)
+	},
+	// 注册账户
+	register:function(name, pwd){
+		let username = Base64.encode(name)
+		let sha1 = require('sha1')
+		let password = sha1(pwd)
+		// console.log(password)
+		let data = `{"type":"register", "username":"${username}", "password":"${password}","room_id":1}`;
+		this.socket.send(data)
 	}
-}	
+}
 export default CHAT
