@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'image_host' => 'http://www.image.com'
+	'image_host' => 'http://image.songsong.net.cn'
 ];

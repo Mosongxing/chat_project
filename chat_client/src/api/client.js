@@ -41,7 +41,7 @@ const CHAT = {
 		this.socket.send(`{"access_token": "${access_token}"`);
 	},
 	init:function(router, action = null){
-	    this.socket = new WebSocket("ws://192.168.31.63:7272")
+	    this.socket = new WebSocket("ws://songsong.net.cn:7272")
 
 	    this.router = router
 	    // 设定定时器
