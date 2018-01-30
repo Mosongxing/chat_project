@@ -1,6 +1,7 @@
 <template>
   <div class="body-wrapper">
     <template v-for="msgObj in CHAT.msgArr">
+      <!-- <p>{{msgObj.msg_type}}</p> -->
       <template v-if="msgObj.msg_type=='sys_msg'">
         <system-msg :msg="msgObj.nickname" :msg_type="msgObj.msg_type"></system-msg>
       </template>
@@ -12,14 +13,16 @@
         <self-msg v-if="msgObj.from_user_id==CHAT.client_id && msgObj.msg_type=='say'" :msg="msgObj.content" :image="msgObj.image"></self-msg>
       </template>
     </template>
+    <!-- <other-msg></other-msg> -->
   </div>
+
 </template>
 <script>
 import OtherMsg from './OtherMsg'
 import SelfMsg from './SelfMsg'
 import SystemMsg from './SystemMsg'
-import CHAT from '../api/client'
 
+import CHAT from '../api/client'
 export default {
   data () {
     return {
@@ -40,10 +43,21 @@ export default {
   components:{
     OtherMsg,
     SelfMsg,
-    SystemMsg,
+    SystemMsg
   },
   methods:{
-
+    // visit(){
+//       let xhr = new XMLHttpRequest();
+//       xhr.open('POST', 'http://item.redream.cn/statistics/chat/chat_visit.php');
+// 　　  xhr.send();
+//       xhr.onreadystatechange = function(){
+//   　　　　if ( xhr.readyState == 4 && xhr.status == 200 ) {
+//   // 　　　　　　alert( xhr.responseText );
+//   　　　　} else {
+//   // 　　　　　　alert( xhr.statusText );
+//   　　　　}
+//   　　}
+    // }
   }
 }
 </script>

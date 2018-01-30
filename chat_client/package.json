@@ -16,7 +16,6 @@
     "less-loader": "^2.2.3",
     "sha1": "^1.1.1",
     "vue": "^1.0.21",
-    "vue-impression": "^0.15.19",
     "vue-router": "^0.7.13"
   },
   "devDependencies": {

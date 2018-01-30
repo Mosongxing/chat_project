@@ -3,14 +3,12 @@ import VueRouter from 'vue-router'
 import routerMap from './router/index'
 import App from './App'
 import Base64 from 'js-base64';
-// import iView from 'iview'
-// import 'iview/dist/styles/iview.css'
 
 Vue.use(VueRouter)
 // Vue.use(iView)
 
 let router = new VueRouter({
-	mode: 'history'
+	history: 'true'
 })
 routerMap(router)
 /* eslint-disable no-new */
