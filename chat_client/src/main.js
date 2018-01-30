@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 // Vue.use(iView)
 
 let router = new VueRouter({
-	history: 'true'
+	// history: 'true'
 })
 routerMap(router)
 /* eslint-disable no-new */
